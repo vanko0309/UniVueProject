@@ -1,22 +1,37 @@
 <template>
   <div>
-  <b-card title="Card Title"
-          img-src="https://picsum.photos/600/300/?image=25"
+  <b-card :title=name
+          :img-src=getImage
           img-alt="Image"
           img-top
           tag="article"
           style="max-width: 20rem;"
           class="mb-2">
     <p class="card-text">
-      Some quick example text to build on the card title and make up the bulk of the card's content.
+      To listen to {{ name }}'s music click the button below.
     </p>
-    <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
+    <b-button :href=musicLink target='_blank' variant="primary">{{ name }}'s Music</b-button>
+  </b-card>
   </div>
 </template>
 
 <script>
   export default {
+    name: 'st-artist-card',
+    props: {
+      name: String,
+      musicLink: String,
+      imageUrl: String,
+    },
+    computed: {
+      getImage() {
+        let imageUrl = this.imageUrl;
+        if (!imageUrl) {
+          imageUrl = 'https://advokatarnaudov.com/wp-content/uploads/2015/11/thumbnail-default.jpg';
+        }
 
+        return imageUrl;
+      },
+    },
   };
 </script>
