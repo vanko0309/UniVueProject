@@ -1,5 +1,6 @@
 <template>
 <div>
+    <b-button v-on:click="goBack" style="float: right">Go Back</b-button>
     <b-card :title="this.artist.name"
             :img-src=getImage
             img-alt="Image"
@@ -10,7 +11,6 @@
         <p class="card-text" v-html=getBio>
         </p>
     </b-card>
-    <b-button v-on:click="goBack" style="float: right">Go Back</b-button>
   </div>
 </template>
 <script>
