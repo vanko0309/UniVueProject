@@ -38,7 +38,7 @@
     methods: {
       getTopArtists() {
         service.getTopArtists((response) => {
-          this.artists = response.artists.artist;
+          this.artists = response.artists.artist.filter(x => x.mbid.length > 0);
         });
       },
     },

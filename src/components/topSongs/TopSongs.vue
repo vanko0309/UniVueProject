@@ -1,11 +1,22 @@
 <template>
   <div class="container mt-3">
     <div class="row">
+      <b-input-group>
+        <b-form-input v-model="searchedWord" type="text"></b-form-input>
+
+        <b-input-group-append>
+          <b-btn variant="outline-primary" v-on:click="search">Search</b-btn>
+          <b-btn variant="outline-danger" v-on:click="clearResult">Clear</b-btn>
+        </b-input-group-append>
+      </b-input-group>
+    </div>
+    <div class="row">
         <st-song-card v-if="getSongs.length"
                                v-for="(song) in getSongs"
                                :key="song.id"
                                :id="song.mbid"
                                :name="song.name"
+                               :imageUrl="song.image[3]['#text']"
                                :songUrl="song.url"
                                :artistName="song.artist.name"
                                :timesPlayed="song.playcount">
@@ -17,6 +28,7 @@
 <script>
   import service from '../../api/data-service';
   import StSongCard from '../cards/TopSongCard';
+  import './style.css';
 
   export default {
     name: 'st-song',
@@ -26,6 +38,7 @@
     data() {
       return {
         songs: [],
+        searchedWord: undefined,
       };
     },
     computed: {
@@ -41,6 +54,16 @@
         service.getTopSongs((response) => {
           this.songs = response.tracks.track;
         });
+      },
+      search() {
+        service.getTopSongs((response) => {
+          const songs = response.tracks.track;
+          const searchedResult = songs.filter(x => x.name.toLowerCase().includes(this.searchedWord.toLowerCase()));
+          this.songs = searchedResult;
+        });
+      },
+      clearResult() {
+        this.getTopSongs();
       },
     },
   };
