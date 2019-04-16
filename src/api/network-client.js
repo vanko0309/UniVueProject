@@ -55,6 +55,7 @@ export default {
       .then((response) => {
         if (options.success) {
           options.success(response.data);
+          console.log(response.data);
         }
       })
       .catch((error) => {

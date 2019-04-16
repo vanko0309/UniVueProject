@@ -1,13 +1,13 @@
 <template>
   <div class="container mt-3">
-    <div class="row">
-        <st-artist-card v-if="getArtists.length"
-                               v-for="(artist) in getArtists"
-                               :key="artist.id"
-                               :id="artist.mbid"
-                               :name="artist.name"
-                               :musicLink="artist.url"
-                               :imageUrl="artist.image[4]['#text']">
+    <div class="row" v-if="getArtists.length">
+        <st-artist-card 
+          v-for="(artist) in getArtists"
+          :key="artist._id"
+          :id="artist._id"
+          :name="artist.name"
+          :musicLink="artist.url"
+          :imageUrl="artist.image.url">
         </st-artist-card>
     </div>
   </div>
@@ -38,7 +38,7 @@
     methods: {
       getTopArtists() {
         service.getTopArtists((response) => {
-          this.artists = response.artists.artist.filter(x => x.mbid.length > 0);
+          this.artists = response.artists;
         });
       },
     },

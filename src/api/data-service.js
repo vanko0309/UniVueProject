@@ -1,13 +1,20 @@
 import networkClient from './network-client';
+import graphqlService from './graphql-service';
 
 export default {
   getTopArtists(success, failure) {
-    networkClient.get('2.0/?method=chart.gettopartists&format=json', success, failure, '');
+    graphqlService.getArtistList('_id url name image { url text } playcount bio', success, failure);
   },
   getTopSongs(success, failure) {
-    networkClient.get('2.0/?method=chart.gettoptracks&format=json', success, failure, '');
+    graphqlService.getTopSongs('_id artist { _id url name image { url text } playcount bio } image { url text } name playcount url', success, failure)
   },
   getArtistDetails(params, success, failure) {
-    networkClient.get('2.0/?method=artist.getInfo&format=json', success, failure, params);
+    graphqlService.getArtistDetails('_id url name image { url text } playcount bio', success, failure);
   },
+  createNewArtist(params, success, failure){
+    graphqlService.createNewArtist(params, success, failure);
+  },
+  createNewTrack(params, success, failure) {
+    graphqlService.createNewTrack(params, success, failure);
+  }
 };

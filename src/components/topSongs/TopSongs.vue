@@ -10,16 +10,16 @@
         </b-input-group-append>
       </b-input-group>
     </div>
-    <div class="row">
-        <st-song-card v-if="getSongs.length"
-                               v-for="(song) in getSongs"
-                               :key="song.id"
-                               :id="song.mbid"
-                               :name="song.name"
-                               :imageUrl="song.image[3]['#text']"
-                               :songUrl="song.url"
-                               :artistName="song.artist.name"
-                               :timesPlayed="song.playcount">
+    <div class="row" v-if="getSongs.length">
+        <st-song-card 
+                    v-for="(song) in getSongs"
+                    :key="song.id"
+                    :id="song.mbid"
+                    :name="song.name"
+                    :imageUrl="song.image.url"
+                    :songUrl="song.url"
+                    :artistName="song.artist.name"
+                    :timesPlayed="song.playcount">
         </st-song-card>
     </div>
   </div>
@@ -52,12 +52,12 @@
     methods: {
       getTopSongs() {
         service.getTopSongs((response) => {
-          this.songs = response.tracks.track;
+          this.songs = response.data.tracks;
         });
       },
       search() {
         service.getTopSongs((response) => {
-          const songs = response.tracks.track;
+          const songs = response.data.tracks;
           const searchedResult = songs.filter(x => x.name.toLowerCase().includes(this.searchedWord.toLowerCase()));
           this.songs = searchedResult;
         });
